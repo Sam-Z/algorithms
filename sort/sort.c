@@ -122,8 +122,8 @@ int __partition(int *buffer, int l, int r)
     int v = buffer[l];
     
     //buffer[l+1,...i]<v, buffer[i+1,...j-1]>v
-    int i = l, j=l;
-    for (; j<=r; j++)
+    int i = l;
+    for (int j=l+1; j<=r; j++)
     {
         if (buffer[j]<v)
         {
