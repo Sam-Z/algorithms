@@ -1,4 +1,6 @@
 #include"sort.h"
+#include<string.h>
+#include<stdlib.h>
 
 void swap(int *x, int *y)
 {
@@ -61,4 +63,55 @@ int insert_sort(int *buffer, int size)
         buffer[j+1] = tmp;
     }
     return(0);
+}
+
+
+
+void __merge(int *buffer, int l, int r, int m)
+{
+    int size = r-l+1;
+
+    int *p = malloc(size*sizeof(int));
+    memcpy(p, buffer+l, size*sizeof(int));
+
+    for (int i = l, j=m+1, k=l; k<=r; k++)
+    {
+        if (j>r)
+        {
+            buffer[k]=p[i++-l];
+        }
+        else if (i>m)
+        {
+            buffer[k]=p[j++-l];
+        }else if(p[i-l]<p[j-l])
+        {
+            buffer[k]=p[i++-l];
+        }else 
+        {
+            buffer[k]=p[j++-l];
+        }
+    }
+    if (p != NULL)
+    {
+        free(p);
+    }
+}
+
+void __merge_sort(int *buffer, int l, int r)
+{
+    if (l>=r)
+    {
+        return;
+    }
+
+    int m = (l+r)/2;
+
+    __merge_sort(buffer, l, m);
+    __merge_sort(buffer, m+1, r);
+    __merge(buffer, l,r,m);
+}
+
+int merge_sort(int *buffer, int size)
+{ 
+    __merge_sort(buffer, 0, size-1);
 }
