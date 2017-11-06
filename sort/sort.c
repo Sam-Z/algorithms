@@ -127,7 +127,8 @@ int __partition(int *buffer, int l, int r)
     {
         if (buffer[j]<v)
         {
-            swap(buffer+i, buffer+j);
+            swap(buffer + i+1, buffer+j);
+            i++;
         }
     }
 
