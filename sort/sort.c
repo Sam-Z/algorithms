@@ -115,3 +115,40 @@ int merge_sort(int *buffer, int size)
 { 
     __merge_sort(buffer, 0, size-1);
 }
+
+int __partition(int *buffer, int l, int r)
+{
+    // 哨兵 
+    int v = buffer[l];
+    
+    //buffer[l+1,...i]<v, buffer[i+1,...j-1]>v
+    int i = l, j=l;
+    for (; j<=r; j++)
+    {
+        if (buffer[j]<v)
+        {
+            swap(buffer+i, buffer+j);
+        }
+    }
+
+    swap(buffer+i, buffer+l);
+
+    return (i);
+}
+
+void __quick_sort(int *buffer, int l, int r)
+{
+    if (l>=r)
+    {
+        return;
+    }
+
+    int k = __partition(buffer, l, r);
+    __quick_sort(buffer, l, k-1);
+    __quick_sort(buffer, k+1, r);
+}
+
+int quick_sort(int *buffer, int size)
+{
+    __quick_sort(buffer, 0, size-1);
+}
