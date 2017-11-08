@@ -153,3 +153,28 @@ int quick_sort(int *buffer, int size)
 {
     __quick_sort(buffer, 0, size-1);
 }
+
+
+int shell_sort(int *buffer, int size)
+{
+   for (int d = size/2; d>0; d /= 2)
+   {
+    for( int i=d; i<size; i ++)
+       {
+           int tmp = buffer[i];
+           int j = i-d;
+           for (; j>=0;  j -= d)
+           {
+            if (buffer[j] > tmp)
+            {
+                buffer[j+d] = buffer[j];
+            }
+            else
+            {
+                break;
+            }
+           }
+           buffer[j+d]=tmp;
+       }
+   }
+}
