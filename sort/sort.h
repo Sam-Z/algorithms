@@ -7,5 +7,5 @@ int insert_sort(int *buffer, int size);
 int merge_sort(int *buffer, int size);
 int quick_sort(int *buffer, int size);
 int shell_sort(int *buffer, int size);
-
+int merge_sort_bu(int *buffer, int size);
 #endif
