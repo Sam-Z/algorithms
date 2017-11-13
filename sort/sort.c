@@ -109,17 +109,18 @@ int __insert_sort(int *buffer, int l, int r)
         int j = i-1;
         for (; j>=l; j--)
         {
-            if (buffer[j]>tmp)
+            if (buffer[j]>=tmp)
             {
                 buffer[j+1]=buffer[j];
-            }
+            }else
             {
                 break;
             }
         }
         buffer[j+1]=tmp;
     }
-    
+   
+    return(0);
 }
 
 void __merge_sort(int *buffer, int l, int r)
@@ -161,21 +162,21 @@ int merge_sort_bu(int *buffer, int size)
 
 int __partition(int *buffer, int l, int r)
 {
+#if 0
     //
     srand(clock());
     int m=rand()%(r-l+1)+l;
 
     swap(buffer+l, buffer+m);
-
+#endif
     // 哨兵 
     int v = buffer[l];
-
-   
+    
     //buffer[l+1,...i]<v, buffer[i+1,...j-1]>v
     int i = l;
     for (int j=l+1; j<=r; j++)
     {
-        if (buffer[j]<v)
+        if (buffer[j]<=v)
         {
             swap(buffer + i+1, buffer+j);
             i++;
@@ -206,6 +207,46 @@ int quick_sort(int *buffer, int size)
 }
 
 
+int __partition2(int *buffer, int l, int r)
+{
+    //随机化
+   swap(buffer+rand()%(r-l+1)+l, buffer+l);
+   int v = buffer[l];
+  
+   //buffer[l+1...i-1] <= v, buffer[j-1...r]>=v
+   int i=l+1, j=r;
+   while(1)
+   {
+       for(;buffer[i]<v && i<=r; i++);
+       for(;buffer[j]>v && j>=l+1; j--);
+       if (i>j) break;
+       swap(buffer+i, buffer+j);
+       i++,j--;
+   }
+   swap(buffer+l, buffer+j);
+   return(j);
+}
+
+int __quick_sort2(int *buffer, int l, int r)
+{
+    if (r-l<15)
+    {
+        __insert_sort(buffer, l, r);
+        return(0);
+    }
+
+    int m = __partition2(buffer, l, r);
+    
+    __quick_sort2(buffer, l, m-1);
+    __quick_sort2(buffer, m+1, r);
+ 
+    return(0);
+}
+int quick_sort2(int *buffer, int size)
+{
+    __quick_sort2(buffer, 0, size-1);
+    return(0);
+}
 int shell_sort(int *buffer, int size)
 {
    for (int d = size/2; d>0; d /= 2)
