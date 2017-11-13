@@ -189,8 +189,9 @@ int __partition(int *buffer, int l, int r)
 
 void __quick_sort(int *buffer, int l, int r)
 {
-    if (l>=r)
+    if (r-l<15)
     {
+        __insert_sort(buffer, l, r);
         return;
     }
 
