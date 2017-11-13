@@ -270,3 +270,51 @@ int shell_sort(int *buffer, int size)
        }
    }
 }
+
+int __quick_sort3(int *buffer, int l, int r)
+{
+    //规模足够小的时候使用插入排序
+    if (r-l<15)
+    {
+        __insert_sort(buffer, l,r);
+        return(0);
+    }
+
+    //随机化标兵
+    swap(buffer+l, buffer+ rand()%(r-l+1)+l);
+    int v = buffer[l];
+     
+    //partition
+    //buffer[l+1,lt]<v, [lt+1,i)==v, [gt,r]>v
+    int lt = l, gt = r+1, i = l+1;
+    while(i<gt)
+    {
+        if (buffer[i]<v)
+        {
+            swap(buffer+lt+1, buffer+i);
+            lt++,i++;
+        }
+        else if (buffer[i]>v)
+        {
+            swap(buffer+gt-1, buffer+i);   
+            gt--;
+        }
+        else if (buffer[i]==v)
+        {
+            i++;
+        }
+    }
+    swap(buffer+l, buffer+lt);
+    lt--;
+
+    __quick_sort3(buffer, l, lt);
+    __quick_sort3(buffer, gt, r);
+    
+    return(0);
+}
+
+int quick_sort3(int *buffer, int size)
+{
+    srand(time(NULL));
+    __quick_sort3(buffer, 0, size-1);
+}
