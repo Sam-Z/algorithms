@@ -1,7 +1,7 @@
 #include"sort.h"
 #include<string.h>
 #include<stdlib.h>
-
+#include<time.h>
 void swap(int *x, int *y)
 {
     int t = *x;
@@ -161,9 +161,16 @@ int merge_sort_bu(int *buffer, int size)
 
 int __partition(int *buffer, int l, int r)
 {
+    //
+    srand(clock());
+    int m=rand()%(r-l+1)+l;
+
+    swap(buffer+l, buffer+m);
+
     // 哨兵 
     int v = buffer[l];
-    
+
+   
     //buffer[l+1,...i]<v, buffer[i+1,...j-1]>v
     int i = l;
     for (int j=l+1; j<=r; j++)
